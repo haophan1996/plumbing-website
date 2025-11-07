@@ -14,6 +14,7 @@
     --text-light: #ffffff;
     --text-dark: #0a0a0a;
     --background-light: #f8f9ff;
+    --hero-dim-opacity: 0;
 }
 
 html,
@@ -23,6 +24,7 @@ body {
     scroll-behavior: smooth;
     background-color: #f5faff;
     color: #1e3a5f;
+
 }
 
 /* LOGO */
@@ -92,47 +94,75 @@ nav a:hover {
 }
 
 /* HERO SECTION */
+.hero-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('ads.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    z-index: 0;
+    will-change: filter;
+}
+
+.hero-bg::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, var(--hero-dim-opacity)); 
+    transition: background-color 0.3s ease-out; 
+    pointer-events: none;
+    z-index: 1; 
+}
+
 .hero {
-  position: relative;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  overflow: hidden;
-  color: var(--text-light);
-  background: url("ads.png") center/cover no-repeat;  
-  transition: filter 0.2s ease-out;
+    position: relative;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    overflow: hidden;
+    color: var(--text-light);
+    transition: filter 0.2s ease-out;
 }
 
 /* Blurring overlay layer */
 .hero::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  backdrop-filter: blur(var(--hero-blur, 0px));
-  background: rgba(255, 255, 255, 0.1); /* adds that frosted glass glow */
-  transition: backdrop-filter 0.3s ease-out, background 0.3s ease-out;
-  z-index: 1;
+    content: "";
+    position: absolute;
+    inset: 0;
+    backdrop-filter: blur(var(--hero-blur, 0px));
+    background: rgba(255, 255, 255, 0.1);
+    /* adds that frosted glass glow */
+    transition: backdrop-filter 0.3s ease-out, background 0.3s ease-out;
+    z-index: 1;
 }
 
 .hero::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.25);
-  z-index: 0;
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.25);
+    z-index: 0;
 }
 
 .hero-content {
-  position: relative;
-  z-index: 1;
-  max-width: 600px;
-  padding: 20px;
-  will-change: transform; /* help GPU accelerate */
-  transition: transform 0.1s ease-out;
+    position: relative;
+    z-index: 1;
+    max-width: 600px;
+    padding: 20px;
+    will-change: transform;
+    /* help GPU accelerate */
+    transition: transform 0.1s ease-out;
 }
- 
+
 
 @keyframes wave {
     from {
@@ -143,7 +173,7 @@ nav a:hover {
         background-position-x: -1000px;
     }
 }
- 
+
 
 .hero h1 {
     font-size: 2.5rem;
@@ -194,9 +224,12 @@ nav a:hover {
 
 /* SECTIONS BASE STYLE */
 section {
-    padding: 120px 50px;
-    text-align: center;
-    transition: opacity 0.8s ease, transform 0.8s ease;
+    padding: 100px 50px;
+    text-align: left;
+    position: relative;
+    /* Essential for containing the content */
+    overflow: hidden;
+    /* To prevent child elements moving out of bounds */
 }
 
 h2 {
@@ -204,11 +237,20 @@ h2 {
     margin-bottom: 20px;
 }
 
+#contact h2 {
+    text-align: left;
+    padding-left: 30px;
+}
+
 /* SERVICES */
 #services {
     background: linear-gradient(to bottom, var(--color-light), var(--color-dark));
-    background-color: var(--color-light);
+    background-color: rgba(255, 255, 255, 0.9);
     color: var(--text-dark);
+}
+
+#services h2 {
+    color: var(--text-light);
 }
 
 .services-container {
@@ -387,4 +429,14 @@ footer {
 
 [data-speed] {
     will-change: transform;
+}
+
+
+.section-content,
+.hero-content {
+    /* Improves performance by telling the browser this property will change */
+    will-change: transform;
+    /* Ensures content has a stacking context above any potential background layers */
+    position: relative;
+    z-index: 2;
 }

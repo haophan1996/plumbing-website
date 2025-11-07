@@ -12,10 +12,12 @@ const observer = new IntersectionObserver(
   { threshold: 0.05 } // triggers earlier for smoother animation
 );
 
+
 document.querySelectorAll(".fade-up, .slide-up").forEach(elem => {
   observer.observe(elem);
 });
 
+const parallaxElements = document.querySelectorAll("[data-speed]");
 // =============================
 // 🌟 SCROLL EFFECTS (Parallax + Blur + Header color)
 // =============================
