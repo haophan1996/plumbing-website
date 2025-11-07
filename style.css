@@ -6,6 +6,16 @@
     font-family: "Poppins", sans-serif;
 }
 
+/* COLOR SYSTEM */
+:root {
+    --color-main: #4F84F9;
+    --color-light: #7BA5FA;
+    --color-dark: #2C5DD7;
+    --text-light: #ffffff;
+    --text-dark: #0a0a0a;
+    --background-light: #f8f9ff;
+}
+
 html,
 body {
     height: 100%;
@@ -15,49 +25,52 @@ body {
     color: #1e3a5f;
 }
 
-
 /* LOGO */
 .logo-container {
     display: flex;
     align-items: center;
-    gap: 10px;
 }
 
 .logo-img {
     height: 45px;
-    width: auto;
     object-fit: contain;
     transition: transform 0.3s ease, filter 0.3s ease;
-    mix-blend-mode: multiply;
-    opacity: 1.9;
-    filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.15));
-
+    filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.2));
 }
 
 .logo-img:hover {
     transform: scale(1.05);
 }
 
-
 /* HEADER */
 header {
     position: fixed;
     top: 0;
     width: 100%;
-    background: rgba(255, 255, 255, 0.95);
+    background: rgba(79, 132, 249, 0.9);
+    /* main color w/ transparency */
+    backdrop-filter: blur(10px);
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 15px 50px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     z-index: 1000;
-    backdrop-filter: blur(6px);
+    transition: background 0.4s ease, box-shadow 0.4s ease;
+}
+
+header.scrolled {
+    background: rgba(44, 93, 215, 0.95);
+    /* darker main shade */
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.2);
 }
 
 .logo {
     font-weight: 700;
     font-size: 1.2rem;
 }
+
+
 
 nav {
     display: flex;
@@ -67,46 +80,59 @@ nav {
 
 nav a {
     text-decoration: none;
-    color: #1e3a5f;
+    color: var(--text-light);
     font-weight: 500;
-    transition: color 0.3s;
+    transition: color 0.3s, transform 0.3s;
 }
 
+
 nav a:hover {
-    color: #0077cc;
+    color: var(--background-light);
+    transform: translateY(-2px);
 }
 
 /* HERO SECTION */
 .hero {
-    position: relative;
-    height: 100vh;
-    /* fill screen exactly, not more or less */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    /* prevents any wave overflow */
-    text-align: center;
-    background-color: #f5faff;
+  position: relative;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  overflow: hidden;
+  color: var(--text-light);
+  background: url("ads.png") center/cover no-repeat;  
+  transition: filter 0.2s ease-out;
 }
 
-/* Fix wave overflow completely */
+/* Blurring overlay layer */
 .hero::before {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    /* exactly fill hero */
-    background: url("https://svgshare.com/i/13vQ.svg");
-    background-size: cover;
-    background-repeat: repeat-x;
-    animation: wave 14s linear infinite;
-    opacity: 0.25;
-    z-index: 0;
+  content: "";
+  position: absolute;
+  inset: 0;
+  backdrop-filter: blur(var(--hero-blur, 0px));
+  background: rgba(255, 255, 255, 0.1); /* adds that frosted glass glow */
+  transition: backdrop-filter 0.3s ease-out, background 0.3s ease-out;
+  z-index: 1;
 }
 
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.25);
+  z-index: 0;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 600px;
+  padding: 20px;
+  will-change: transform; /* help GPU accelerate */
+  transition: transform 0.1s ease-out;
+}
+ 
 
 @keyframes wave {
     from {
@@ -117,18 +143,10 @@ nav a:hover {
         background-position-x: -1000px;
     }
 }
-
-
-.hero-content {
-    position: relative;
-    z-index: 2;
-    max-width: 600px;
-    color: #0a2740;
-    padding: 20px;
-}
+ 
 
 .hero h1 {
-    font-size: 2.0rem;
+    font-size: 2.5rem;
     margin-bottom: 15px;
 }
 
@@ -138,8 +156,8 @@ nav a:hover {
 }
 
 .btn {
-    background: #0077cc;
-    color: #fff;
+    background: var(--text-light);
+    color: var(--color-main);
     padding: 12px 25px;
     border-radius: 30px;
     text-decoration: none;
@@ -149,7 +167,8 @@ nav a:hover {
 }
 
 .btn:hover {
-    background: #005fa3;
+    background: var(--background-light);
+    color: var(--color-dark);
     transform: scale(1.05);
 }
 
@@ -157,7 +176,7 @@ nav a:hover {
 .scroll-down {
     margin-top: 40px;
     font-size: 1.2rem;
-    opacity: 0.7;
+    opacity: 0.8;
     animation: bounce 1.5s infinite;
 }
 
@@ -173,7 +192,7 @@ nav a:hover {
     }
 }
 
-/* SECTIONS */
+/* SECTIONS BASE STYLE */
 section {
     padding: 120px 50px;
     text-align: center;
@@ -185,6 +204,13 @@ h2 {
     margin-bottom: 20px;
 }
 
+/* SERVICES */
+#services {
+    background: linear-gradient(to bottom, var(--color-light), var(--color-dark));
+    background-color: var(--color-light);
+    color: var(--text-dark);
+}
+
 .services-container {
     display: flex;
     justify-content: center;
@@ -194,7 +220,7 @@ h2 {
 }
 
 .service-card {
-    background: #fff;
+    background: var(--background-light);
     border-radius: 15px;
     padding: 25px;
     width: 280px;
@@ -212,11 +238,45 @@ h2 {
     margin-bottom: 10px;
 }
 
+/* ABOUT */
+#about {
+    background: linear-gradient(to bottom, var(--color-dark), var(--color-main));
+    background-color: var(--color-dark);
+    color: var(--text-light);
+}
+
 /* FOOTER */
 footer {
-    background: #1e3a5f;
-    color: #fff;
+    background-color: var(--color-main);
+    color: var(--text-light);
     padding: 60px 20px;
+    text-align: center;
+}
+
+/* ==========================
+   📍 GOOGLE MAP EMBED
+========================== */
+
+.map-container {
+    width: 100%;
+    max-width: 800px;
+    height: 350px;
+    margin: 30px auto;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.map-container iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    filter: grayscale(20%) brightness(1.05);
+    transition: filter 0.3s ease;
+}
+
+.map-container iframe:hover {
+    filter: grayscale(0%) brightness(1.1);
 }
 
 /* ANIMATIONS */
@@ -242,9 +302,7 @@ footer {
     transform: translateY(0) scale(1);
 }
 
-/* ---------------------
-   📱 MOBILE RESPONSIVE
----------------------- */
+/* MOBILE MENU */
 @media (max-width: 900px) {
     header {
         padding: 15px 25px;
@@ -256,9 +314,7 @@ footer {
         background: transparent;
         border: none;
         cursor: pointer;
-        color: #1e3a5f;
-        z-index: 1200;
-        /* keep it above other content */
+        color: var(--text-light);
     }
 
     nav {
@@ -275,7 +331,6 @@ footer {
         z-index: 1100;
     }
 
-    /* show nav when active */
     nav.active {
         display: flex;
     }
@@ -323,9 +378,13 @@ footer {
     }
 }
 
-
 @media (min-width: 901px) {
     .menu-toggle {
         display: none;
     }
+}
+
+
+[data-speed] {
+    will-change: transform;
 }
