@@ -13,7 +13,6 @@
     --color-dark: #2C5DD7;
     --text-light: #ffffff;
     --text-dark: #0a0a0a;
-    --background-light: #f8f9ff;
     --hero-dim-opacity: 0;
 }
 
@@ -22,10 +21,13 @@ body {
     height: 100%;
     overflow-x: hidden;
     scroll-behavior: smooth;
-    background-color: #f5faff;
+    backdrop-filter: blur(var(--text-light, 0px));
+    background: rgba(255, 255, 255, 0.1);
     color: #1e3a5f;
-
 }
+
+
+
 
 /* LOGO */
 .logo-container {
@@ -243,7 +245,7 @@ h2 {
     background-color: rgba(255, 255, 255, 0.9);
     color: var(--text-light);
 }
- 
+
 
 .services-container {
     display: flex;
