@@ -249,7 +249,7 @@ h2 {
     color: var(--text-dark);
 }
 
-#services h2 {
+#services h2, #services h4 {
     color: var(--text-light);
 }
 
