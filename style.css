@@ -16,13 +16,23 @@
     --hero-dim-opacity: 0;
 }
 
-html,
+/* html,
 body {
     height: 100%;
     overflow-x: hidden;
     scroll-behavior: smooth;
     backdrop-filter: blur(var(--text-light, 0px));
     background: rgba(255, 255, 255, 0.1);
+    color: #1e3a5f;
+} */
+
+html, body {
+    height: 100%;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    -webkit-backdrop-filter: blur(0px);
+    backdrop-filter: blur(var(--text-light, 0px));
+    background: var(--color-main);
     color: #1e3a5f;
 }
 
@@ -35,23 +45,22 @@ body {
 .logo-container {
     display: flex;
     align-items: center;
-    height: 100%; /* full height of header */
-    overflow: hidden; /
+    height: auto;
+    /* full height of header */
+    overflow: hidden;/
 }
 
 .logo-img {
-    height: 50px;
+    height: 45px;
     object-fit: contain;
-    transition: transform 0.3s ease, filter 0.3s ease; 
+    transition: transform 0.3s ease, filter 0.3s ease;
 }
 
 .logo-img:hover {
-    height: 60px;
-    object-fit: fill;
-    transform: scale(1.1); /* visually bigger, doesn't affect header */
+    transform: scale(1.08);
 }
 
-.header-img{
+.header-img {
     height: 150px;
 }
 
@@ -357,9 +366,19 @@ footer h2 {
 
 /* MOBILE MENU */
 @media (max-width: 900px) {
+    .logo-img {
+        height: 40px;
+        max-width: 120px;
+    }
+
+    .logo-container {
+        justify-content: flex-start;
+        height: auto;
+        padding: 5px 0;
+    }
+
     .hero-bg {
         background-attachment: scroll;
-        /* fallback for mobile */
     }
 
     header {
