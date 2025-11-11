@@ -22,7 +22,7 @@ const parallaxElements = document.querySelectorAll("[data-speed]");
 // 🌟 SCROLL EFFECTS (Parallax + Blur + Header color)
 // =============================
 window.addEventListener("scroll", () => {
-   
+
 });
 
 // =============================
@@ -53,3 +53,18 @@ document.addEventListener("DOMContentLoaded", () => {
     if (e.key === "Escape") setExpanded(false);
   });
 });
+
+
+const text = "Reliable Plumbing and Heating You Can Trust. Professional, fast, and affordable plumbing and heating services in Massachusetts.";
+const el = document.getElementById("typing-text");
+let i = 0;
+
+function typeWriter() {
+  if (i < text.length) {
+    el.innerHTML += text.charAt(i);
+    i++;
+    setTimeout(typeWriter, 10); // typing speed
+  }
+}
+
+window.addEventListener("load", typeWriter);
