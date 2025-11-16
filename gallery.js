@@ -1,5 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const basePath = "../assets/images/"; // relative path works locally & GitHub Pages
+    const basePath = `${window.location.origin}${window.location.pathname.replace(/\/[^/]*$/, '')}/assets/images/`;
+
+    // const basePath = "../assets/images/"; // relative path works locally & GitHub Pages
     let images = [];
     let currentIndex = 0;
 
