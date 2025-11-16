@@ -1,20 +1,17 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // Fixed basePath
+    // Dynamic base path for GitHub Pages or subfolders
     function getBasePath() {
         const path = window.location.pathname;
-        const segments = path.split('/').filter(Boolean); // Remove empty
-        if (segments.length > 0 && segments[segments.length - 1].includes('.')) {
-            segments.pop(); // Remove filename like index.html
-        }
+        const segments = path.split('/').filter(Boolean);
+        if (segments.length > 0 && segments[segments.length - 1].includes('.')) segments.pop();
         const baseDir = segments.length > 0 ? '/' + segments.join('/') + '/' : '/';
         return window.location.origin + baseDir + 'assets/images/';
     }
     const basePath = getBasePath();
-    console.log(getBasePath());
 
-    // const basePath = "../assets/images/"; // relative path works locally & GitHub Pages
     let images = [];
     let currentIndex = 0;
+    const imageCache = {}; // <-- cache
 
     const container = document.getElementById("image-container");
     const lightbox = document.getElementById("lightbox");
@@ -30,11 +27,17 @@ document.addEventListener("DOMContentLoaded", () => {
         .then(files => {
             images = files;
 
+            // Preload images
+            images.forEach(file => {
+                const img = new Image();
+                img.src = basePath + file;
+                imageCache[file] = img; // store in memory
+            });
+
+            // Generate gallery and thumbnails
             files.forEach((file, index) => {
-                // Main library image
                 const img = document.createElement("img");
                 img.src = basePath + file;
-                console.log(basePath + file)
                 img.alt = file;
                 img.classList.add("library-img");
                 img.addEventListener("click", () => {
@@ -43,7 +46,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 });
                 container.appendChild(img);
 
-                // Thumbnail
                 const thumb = document.createElement("img");
                 thumb.src = basePath + file;
                 thumb.alt = file;
@@ -56,16 +58,14 @@ document.addEventListener("DOMContentLoaded", () => {
         })
         .catch(err => console.error("Failed to load images:", err));
 
-    // Show lightbox
     function showLightbox() {
-        lightboxImg.src = basePath + images[currentIndex];
+        const cachedImg = imageCache[images[currentIndex]];
+        if (cachedImg) lightboxImg.src = cachedImg.src;
         lightbox.style.display = "flex";
 
-        // Highlight active thumbnail
         const thumbs = thumbsContainer.querySelectorAll("img");
         thumbs.forEach((t, i) => t.classList.toggle("active", i === currentIndex));
 
-        // Scroll active thumbnail into view
         const activeThumb = thumbsContainer.querySelector(".active");
         if (activeThumb) activeThumb.scrollIntoView({ behavior: "smooth", inline: "center" });
     }
