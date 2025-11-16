@@ -12,6 +12,7 @@
     <title>Boston Plumbing - Heating Solutions</title>
     <link rel="stylesheet" href="style.css" />
     <script defer src="script.js"></script>
+    <script defer src="gallery.js"></script>
 </head>
 
 <body>
@@ -25,6 +26,7 @@
             ☰
         </button>
         <nav>
+            <a href="#image-library">Images</a>
             <a href="#services">Services</a>
             <a href="#about">About</a>
             <a href="#contact">Contact</a>
@@ -33,14 +35,13 @@
 
     <section class="hero">
         <div class="hero-bg"></div>
-        <div class="hero-content fade-up" data-speed="0.4">
-            <img src="assets/logo.png" class="header-img" />
-            <h1 class="color-orange-light">One Price. No Surprises.</h1>
+        <div class="hero-content fade-up color-orange" data-speed="0.4">
 
-            <p class="color-orange-light b">Reliable Plumbing and Heating You Can Trust. </br> Professional, fast, and affordable plumbing and
-                heating services in
-                Massachusetts.</p>
-                 
+            <img src="assets/logo.png" class="header-img" />
+            <h1>One Price. No Surprises. </h1>
+            <p class="b">Reliable Plumbing and Heating You Can Trust. </br> Professional, fast, and affordable
+                plumbing and heating services in Massachusetts.</p>
+
             <a href="tel:617-388-3879" class="btn">Call us (617) 388-3879</a>
             <h2 class="pt-14">or</h2>
             <a href="sms:617-388-3879?body=Hi,%20I%20need%20plumbing%20help." class="btn btn-secondary">
@@ -49,6 +50,25 @@
             <!-- <div class="scroll-down">↓ Scroll</div> -->
         </div>
     </section>
+
+
+    <!-- <section id="image-library" class="reveal fade-up ">
+        <h2>Images</h2>
+    </section> -->
+
+    <section id="image-library" class="reveal fade-up">
+        <h2>Images</h2>
+        <div id="image-container"></div> <!-- wrapper for images -->
+    </section>
+
+
+    <!-- Lightbox modal -->
+    <div id="lightbox" class="lightbox">
+        <span class="close">&times;</span>
+        <img class="lightbox-img" src="" alt="">
+    </div>
+
+
 
     <section id="services" class="reveal fade-up">
         <h2>Our Services</h2>

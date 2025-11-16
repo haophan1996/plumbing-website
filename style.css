@@ -10,11 +10,12 @@
 :root {
     --color-main: #4F84F9;
     --color-light: #7BA5FA;
+    --color-orange-light: #fac37b;
     --color-dark: #2C5DD7;
     --text-light: #ffffff;
     --text-dark: #0a0a0a;
     --hero-dim-opacity: 0;
-    --orange-color: hsl(39, 100%, 50%);
+    --orange-color: #ee894b;
     --orange-light: color-mix(in srgb, var(--orange-color) 70%, white);
 }
 
@@ -28,19 +29,38 @@ body {
     backdrop-filter: blur(var(--text-light, 0px));
     background: rgba(255, 255, 255, 0.1);
     color: #1e3a5f;
+
+    user-select: none;            /* standard */
+    -webkit-user-select: none;    /* Safari/Chrome */
+    -moz-user-select: none;       /* Firefox */
+    -ms-user-select: none;        /* IE/Edge */
+    outline: none;       
 }
 
 .color-orange {
     color: var(--orange-color);
+    -webkit-text-stroke: 0.3px black;
+
+
+    padding: 4px 10px;
+    border-radius: 10px;
+
+    background: rgba(63, 62, 62, 0.5);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(8px);
+    /* Safari */
+    border: 1px solid rgba(255, 255, 255, 0.3);
+
 }
 
 .color-orange-light {
     color: var(--orange-light);
 }
- 
+
 .pt-14 {
     padding-top: 14px;
 }
+
 .b {
     font-weight: bold;
 }
@@ -251,10 +271,8 @@ nav a:hover {
 section {
     padding: 100px 50px;
     text-align: left;
-    position: relative;
-    /* Essential for containing the content */
-    overflow: hidden;
-    /* To prevent child elements moving out of bounds */
+    position: relative; 
+    overflow: hidden; 
 }
 
 h2 {
@@ -299,6 +317,73 @@ h2 {
     font-size: 2.5rem;
     margin-bottom: 10px;
 }
+
+/* IMAGE */
+#image-library {
+    background: linear-gradient(to bottom, var(--color-orange-light), var(--color-light));
+    background-color: rgba(255, 255, 255, 0.9);
+    color: var(--text-light);
+    display: grid;
+    gap: 12px; 
+}
+
+#image-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 12px;
+    margin-top: 10px; /* small spacing below h2 */
+}
+ 
+.library-img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    cursor: pointer;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    outline: none;      /* remove default focus outline */
+    user-select: none;  /* prevent text/image selection highlight */
+}
+.library-img:focus {
+    outline: none;      /* also remove if focused */
+    box-shadow: 0 0 0 3px rgba(0,0,0,0.3); /* subtle black glow */
+}
+
+.library-img:hover {
+    transform: scale(1.04);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+}
+
+/* Lightbox */
+.lightbox {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.8);
+    justify-content: center;
+    align-items: center;
+}
+
+.lightbox-img {
+    max-width: 90%;
+    max-height: 90%;
+    border-radius: 10px;
+}
+
+.lightbox .close {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    font-size: 40px;
+    color: white;
+    cursor: pointer;
+}
+
 
 /* ABOUT */
 #about {
