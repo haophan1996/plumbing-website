@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
+    const basePath = "../assets/images/"; // relative path works locally & GitHub Pages
     let images = [];
     let currentIndex = 0;
 
@@ -10,48 +11,45 @@ document.addEventListener("DOMContentLoaded", () => {
     const nextBtn = document.querySelector(".lightbox .next");
     const thumbsContainer = document.getElementById("lightbox-thumbnails");
 
-    // Load images
-    const basePath = "./assets/images/";
+    // Load images from JSON
     fetch(basePath + "images.json")
         .then(res => res.json())
         .then(files => {
             images = files;
 
             files.forEach((file, index) => {
+                // Main library image
                 const img = document.createElement("img");
-                img.src = "assets/images/" + file;
+                img.src = basePath + file;
                 img.alt = file;
                 img.classList.add("library-img");
-
-                // Click to open lightbox
                 img.addEventListener("click", () => {
                     currentIndex = index;
                     showLightbox();
                 });
-
                 container.appendChild(img);
 
-                // Create thumbnail
+                // Thumbnail
                 const thumb = document.createElement("img");
-                thumb.src = img.src;
-                thumb.alt = img.alt;
+                thumb.src = basePath + file;
+                thumb.alt = file;
                 thumb.addEventListener("click", () => {
                     currentIndex = index;
                     showLightbox();
                 });
                 thumbsContainer.appendChild(thumb);
             });
-        });
+        })
+        .catch(err => console.error("Failed to load images:", err));
 
+    // Show lightbox
     function showLightbox() {
-        lightboxImg.src = "./assets/images/" + images[currentIndex];
+        lightboxImg.src = basePath + images[currentIndex];
         lightbox.style.display = "flex";
 
         // Highlight active thumbnail
         const thumbs = thumbsContainer.querySelectorAll("img");
-        thumbs.forEach((t, i) => {
-            t.classList.toggle("active", i === currentIndex);
-        });
+        thumbs.forEach((t, i) => t.classList.toggle("active", i === currentIndex));
 
         // Scroll active thumbnail into view
         const activeThumb = thumbsContainer.querySelector(".active");
@@ -59,15 +57,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // Navigation
-    prevBtn.addEventListener("click", () => {
-        currentIndex = (currentIndex - 1 + images.length) % images.length;
-        showLightbox();
-    });
-    nextBtn.addEventListener("click", () => {
-        currentIndex = (currentIndex + 1) % images.length;
-        showLightbox();
-    });
-
+    prevBtn.addEventListener("click", () => { currentIndex = (currentIndex - 1 + images.length) % images.length; showLightbox(); });
+    nextBtn.addEventListener("click", () => { currentIndex = (currentIndex + 1) % images.length; showLightbox(); });
     closeBtn.addEventListener("click", () => lightbox.style.display = "none");
     lightbox.addEventListener("click", e => { if (e.target === lightbox) lightbox.style.display = "none"; });
 
