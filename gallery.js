@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const thumbsContainer = document.getElementById("lightbox-thumbnails");
 
     // Load images from JSON
-    fetch("./assets/images/images.json")
+    fetch("assets/images/images.json")
         .then(res => res.json())
         .then(files => {
             images = files;
