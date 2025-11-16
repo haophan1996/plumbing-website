@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const thumbsContainer = document.getElementById("lightbox-thumbnails");
 
     // Load images from JSON
-    fetch("assets/images/images.json")
+    fetch(basePath + "images.json")
         .then(res => res.json())
         .then(files => {
             images = files;
@@ -34,6 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 // Main library image
                 const img = document.createElement("img");
                 img.src = basePath + file;
+                console.log(basePath + file)
                 img.alt = file;
                 img.classList.add("library-img");
                 img.addEventListener("click", () => {
