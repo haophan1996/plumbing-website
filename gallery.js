@@ -1,13 +1,16 @@
 document.addEventListener("DOMContentLoaded", () => {
     // Fixed basePath
     function getBasePath() {
-        let path = window.location.pathname;
-        if (path.endsWith('/')) path = path.slice(0, -1);
-        const lastSlash = path.lastIndexOf('/');
-        const dirPath = lastSlash > 0 ? path.substring(0, lastSlash + 1) : '/';
-        return `${window.location.origin}${dirPath}assets/images/`;
+        const path = window.location.pathname;
+        const segments = path.split('/').filter(Boolean); // Remove empty
+        if (segments.length > 0 && segments[segments.length - 1].includes('.')) {
+            segments.pop(); // Remove filename like index.html
+        }
+        const baseDir = segments.length > 0 ? '/' + segments.join('/') + '/' : '/';
+        return window.location.origin + baseDir + 'assets/images/';
     }
-    const basePath = getBasePath(); 
+    const basePath = getBasePath();
+    console.log(getBasePath());
 
     // const basePath = "../assets/images/"; // relative path works locally & GitHub Pages
     let images = [];
