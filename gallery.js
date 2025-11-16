@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
     function showLightbox() {
-        lightboxImg.src = "assets/images/" + images[currentIndex];
+        lightboxImg.src = "./assets/images/" + images[currentIndex];
         lightbox.style.display = "flex";
 
         // Highlight active thumbnail
